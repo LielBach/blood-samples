@@ -1,11 +1,10 @@
 from blood_samples_reader import read_samples
 from keras.layers import Input, Dense
-from keras.models import Model
+from keras.models import Model, load_model
 from keras.optimizers import SGD
 from keras.losses import mean_squared_error
 from keras.activations import relu
 from sklearn.preprocessing import StandardScaler
-
 
 blood_samples, ages = read_samples()
 scaled_blood_samples = StandardScaler().fit_transform(blood_samples)
@@ -21,6 +20,7 @@ predictions = Dense(1)(layer_3)
 model = Model(inputs=inputs, outputs=predictions)
 model.compile(optimizer=SGD(lr=0.00001),
               loss=mean_squared_error)
-model.fit(scaled_blood_samples, ages, validation_split=0.2, epochs=15000,
+model = load_model('blood_samples_model')
+model.fit(scaled_blood_samples, ages, validation_split=0.2, epochs=30000,
     verbose=2, batch_size=6000)
 model.save('blood_samples_model')
