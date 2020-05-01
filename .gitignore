@@ -32,3 +32,4 @@ _ReSharper*/
 packages/
 *.pyc
 *.vscode/
+blood_samples_model
